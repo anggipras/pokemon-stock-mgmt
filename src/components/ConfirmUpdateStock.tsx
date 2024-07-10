@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import ModalButton from "./ModalButton";
+import { MdOutlineClose } from "react-icons/md";
+import { GrFormEdit } from "react-icons/gr";
 
 interface ConfirmUpdateStockProps {
   isOpen: boolean;
@@ -7,6 +10,8 @@ interface ConfirmUpdateStockProps {
   dozens: number;
   currentStock: number;
   onConfirm: (notes: string) => void;
+  onEdit: () => void;
+  onResetStock: () => void;
 }
 
 const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
@@ -16,11 +21,14 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
   dozens,
   currentStock,
   onConfirm,
+  onEdit,
+  onResetStock,
 }) => {
   const [notes, setNotes] = useState<string>("");
 
   const handleConfirm = () => {
     onConfirm(notes);
+    onResetStock();
     onClose();
   };
 
@@ -29,53 +37,86 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
   const total = pcs + dozens * 12;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white">
-      <div className="bg-white w-full h-auto m-auto max-w-2xl">
-        <h2 className="text-4xl font-bold mb-10 capitalize">
-          Konfirmasi update stok
-        </h2>
-        <div>
-          Selisih
-          <span className="text-4xl">+{total} pcs</span>
-        </div>
-        <div className="flex justify-between">
-          <div>
-            Di sistem
-            <span className="text-2xl">{currentStock} pcs</span>
-          </div>
-          <div>
-            Hasil update stok
-            <span className="text-2xl">{total + currentStock}</span>
-          </div>
-        </div>
-        {/* <div className="mb-4">
-          <p>Hasil update stok: {total} pcs</p>
-          <p>
-            Pcs: {pcs}, Lusin: {dozens}
-          </p>
-        </div> */}
-        <div className="mb-4">
-          <label className="block mb-2">Catatan</label>
-          <input
-            type="text"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <div className="flex justify-end">
-          <button
-            onClick={handleConfirm}
-            className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-          >
-            Simpan
-          </button>
-          <button
+    <div className="fixed inset-0 flex sm:items-center justify-center bg-white">
+      <div className="bg-white w-full sm:h-auto sm:m-auto max-w-2xl">
+        <div className="relative flex sm:hidden justify-center items-center hover:underline mb-4 max-sm:shadow-md max-sm:border-b max-sm:p-4">
+          <div
+            className="max-sm:absolute left-0 max-sm:ml-4 mr-2"
             onClick={onClose}
-            className="bg-gray-500 text-white px-4 py-2 rounded"
           >
-            Batal
-          </button>
+            <MdOutlineClose className="text-teal-700" />
+          </div>
+          <div className="sm:text-teal-700">Stok Pokémon</div>
+        </div>
+        <div className="px-4">
+          <h2 className="text-4xl font-bold mb-10 capitalize">
+            Konfirmasi update stok
+          </h2>
+          <div className="mb-6">
+            <div>Selisih</div>
+            <div className="text-4xl">+{total} pcs</div>
+          </div>
+          <div className="flex justify-between">
+            <div>
+              <div>Di sistem</div>
+              <div className="text-2xl">{currentStock} pcs</div>
+            </div>
+            <div>
+              <div>Hasil update stok</div>
+              <div className="text-2xl">{total + currentStock} pcs</div>
+            </div>
+          </div>
+          <table className="table-fixed min-w-full mt-10">
+            <thead>
+              <tr className="border-b border-gray-800">
+                <th className="w-4/12 text-left py-2">Keterangan</th>
+                <th className="w-6/12 text-left py-2 max-sm:hidden">Detail</th>
+                <th className="w-2/12 text-left py-2">Jumlah</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-gray-800">
+                <td className="py-3">
+                  <div className="font-bold text-teal-700">
+                    Hasil update stok
+                  </div>
+                  <p className="sm:hidden">
+                    {(total + currentStock) % 12} pcs,{" "}
+                    {Math.floor((total + currentStock) / 12)} lusin (12s)
+                  </p>
+                </td>
+                <td className="py-3 max-sm:hidden">
+                  <p>
+                    {(total + currentStock) % 12} pcs,{" "}
+                    {Math.floor((total + currentStock) / 12)} lusin (12s)
+                  </p>
+                </td>
+                <td className="py-3 flex items-center" onClick={onEdit}>
+                  <div>{total + currentStock} pcs</div>
+                  <GrFormEdit className="text-teal-700 text-2xl ml-3" />
+                </td>
+              </tr>
+              <tr>
+                <td className="py-3 font-bold">Total hasil stok opname</td>
+                <td className="py-3 max-sm:hidden"></td>
+                <td className="py-3 font-bold">{total + currentStock} pcs</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="mt-10">
+            <label className="block mb-4 font-bold">Catatan</label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              className="w-full h-20 p-2 border rounded"
+              placeholder="Contoh: stok awal"
+            />
+          </div>
+          <ModalButton
+            handleSave={handleConfirm}
+            onClose={onClose}
+            cancelBtn={false}
+          />
         </div>
       </div>
     </div>

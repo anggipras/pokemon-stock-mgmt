@@ -111,3 +111,5 @@ export const usePokemon = () => {
   }
   return context;
 };
+
+export { PokemonContext }; // Add this export
