@@ -141,10 +141,10 @@ const PokemonDetail: React.FC = () => {
                   </td>
                   <td
                     className={`py-3 border-b ${
-                      item.qty ? "text-teal-500" : ""
+                      item.qty >= 0 ? "text-teal-500" : "text-red-500"
                     }`}
                   >
-                    {item.qty ? `+${item.qty}` : item.qty}
+                    {item.qty > 0 ? `+${item.qty}` : item.qty}
                   </td>
                   <td className="py-3 border-b">{item.stock}</td>
                 </tr>

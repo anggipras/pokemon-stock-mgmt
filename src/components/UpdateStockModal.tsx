@@ -18,6 +18,7 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
 }) => {
   const [pcsUpdate, setPcs] = useState<number>(pcs);
   const [dozensUpdate, setDozens] = useState<number>(dozens);
+  const [disabledSave, setDisabledSave] = useState<boolean>(!pcs && !dozens);
 
   const handleSave = () => {
     onSave(pcsUpdate, dozensUpdate);
@@ -25,9 +26,18 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
   };
 
   useEffect(() => {
+    if (isOpen) {
+      setDisabledSave(!pcs && !dozens);
+    }
     setPcs(pcs);
     setDozens(dozens);
-  }, [pcs, dozens]);
+  }, [pcs, dozens, isOpen]);
+
+  useEffect(() => {
+    if (!pcsUpdate && !dozensUpdate) {
+      setDisabledSave(true);
+    }
+  }, [pcsUpdate, dozensUpdate]);
 
   if (!isOpen) return null;
 
@@ -63,7 +73,14 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
                   type="text"
                   inputMode="tel"
                   value={pcsUpdate !== 0 ? pcsUpdate : undefined}
-                  onChange={(e) => setPcs(parseInt(e.target.value))}
+                  onChange={(e) => {
+                    if (Number(e.target.value)) {
+                      setPcs(Number(e.target.value));
+                      setDisabledSave(false);
+                    } else {
+                      setPcs(0);
+                    }
+                  }}
                   className="w-12 p-2 border rounded shadow-inner"
                 />
                 <p> =</p>
@@ -83,7 +100,14 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
                   type="text"
                   inputMode="tel"
                   value={dozensUpdate !== 0 ? dozensUpdate : undefined}
-                  onChange={(e) => setDozens(parseInt(e.target.value))}
+                  onChange={(e) => {
+                    if (Number(e.target.value)) {
+                      setDozens(Number(e.target.value));
+                      setDisabledSave(false);
+                    } else {
+                      setDozens(0);
+                    }
+                  }}
                   className="w-12 p-2 border rounded shadow-inner"
                 />
                 <p> =</p>
@@ -98,7 +122,11 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
           </div>
           <strong>{pcsUpdate + dozensUpdate * 12}</strong>
         </div>
-        <ModalButton handleSave={handleSave} onClose={onClose} />
+        <ModalButton
+          onDisabled={disabledSave}
+          handleSave={handleSave}
+          onClose={onClose}
+        />
       </div>
     </div>
   );
