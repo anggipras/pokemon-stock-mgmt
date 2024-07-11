@@ -96,7 +96,7 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
                     {Math.floor((total + currentStock) / 12)} lusin (12s)
                   </p>
                 </td>
-                <td className="py-3 flex items-center" onClick={onEdit}>
+                <td className="py-3 flex items-center cursor-pointer" onClick={onEdit}>
                   <div>{total + currentStock} pcs</div>
                   <GrFormEdit className="text-teal-700 text-2xl ml-3" />
                 </td>
