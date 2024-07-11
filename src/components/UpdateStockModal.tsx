@@ -60,7 +60,8 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
                 <p>1 x</p>
                 <input
                   id="pcs-input"
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   value={pcsUpdate !== 0 ? pcsUpdate : undefined}
                   onChange={(e) => setPcs(Number(e.target.value))}
                   className="w-12 p-2 border rounded shadow-inner"
@@ -79,7 +80,8 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
                 <p>12 x </p>
                 <input
                   id="dozens-input"
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   value={dozensUpdate !== 0 ? dozensUpdate : undefined}
                   onChange={(e) => setDozens(Number(e.target.value))}
                   className="w-12 p-2 border rounded shadow-inner"
