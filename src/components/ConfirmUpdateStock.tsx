@@ -49,9 +49,7 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
           >
             <MdOutlineClose className="text-teal-700" />
           </div>
-          <div className="font-bold capitalize">
-            {pokemon.name}
-          </div>
+          <div className="font-bold capitalize">{pokemon.name}</div>
         </div>
         <div className="px-4">
           <h2 className="text-4xl font-bold mb-10 capitalize">
@@ -59,7 +57,9 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
           </h2>
           <div className="mb-6">
             <div>Selisih</div>
-            <div className="text-4xl">+{total} pcs</div>
+            <div className="text-4xl">
+              {total >= 0 ? `+${total}` : total} pcs
+            </div>
           </div>
           <div className="flex justify-between">
             <div>
@@ -96,7 +96,10 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
                     {Math.floor((total + currentStock) / 12)} lusin (12s)
                   </p>
                 </td>
-                <td className="py-3 flex items-center cursor-pointer" onClick={onEdit}>
+                <td
+                  className="py-3 flex items-center cursor-pointer"
+                  onClick={onEdit}
+                >
                   <div>{total + currentStock} pcs</div>
                   <GrFormEdit className="text-teal-700 text-2xl ml-3" />
                 </td>
