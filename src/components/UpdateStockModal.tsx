@@ -52,13 +52,14 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
           <tbody>
             <tr className="border-b">
               <td className="py-3">
-                <label className="block mb-2">
+                <label className="block mb-2" htmlFor="pcs-input">
                   <strong>Pcs</strong>
                 </label>
               </td>
               <td className="py-3 flex items-center gap-2 justify-end">
                 <p>1 x</p>
                 <input
+                  id="pcs-input"
                   type="number"
                   value={pcsUpdate !== 0 ? pcsUpdate : undefined}
                   onChange={(e) => setPcs(Number(e.target.value))}
@@ -70,13 +71,14 @@ const UpdateStockModal: React.FC<UpdateStockModalProps> = ({
             </tr>
             <tr className="border-b">
               <td className="py-3">
-                <label className="block mb-2">
+                <label className="block mb-2" htmlFor="dozens-input">
                   <strong>Lusin</strong>
                 </label>
               </td>
               <td className="py-3 flex items-center gap-2 justify-end">
                 <p>12 x </p>
                 <input
+                  id="dozens-input"
                   type="number"
                   value={dozensUpdate !== 0 ? dozensUpdate : undefined}
                   onChange={(e) => setDozens(Number(e.target.value))}

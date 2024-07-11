@@ -1,4 +1,4 @@
-// Utility function to format date
+// Utility function to format full date
 export const formatFullDate = (dateString: string) => {
   const date = new Date(dateString);
   return new Intl.DateTimeFormat("id-ID", {

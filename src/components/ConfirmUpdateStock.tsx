@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ModalButton from "./ModalButton";
 import { MdOutlineClose } from "react-icons/md";
 import { GrFormEdit } from "react-icons/gr";
+import { Pokemon } from "../context/PokemonContext";
 
 interface ConfirmUpdateStockProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface ConfirmUpdateStockProps {
   onConfirm: (notes: string) => void;
   onEdit: () => void;
   onResetStock: () => void;
+  pokemon: Pokemon;
 }
 
 const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
@@ -23,6 +25,7 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
   onConfirm,
   onEdit,
   onResetStock,
+  pokemon,
 }) => {
   const [notes, setNotes] = useState<string>("");
 
@@ -46,7 +49,9 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
           >
             <MdOutlineClose className="text-teal-700" />
           </div>
-          <div className="sm:text-teal-700">Stok Pokémon</div>
+          <div className="font-bold capitalize">
+            {pokemon.name}
+          </div>
         </div>
         <div className="px-4">
           <h2 className="text-4xl font-bold mb-10 capitalize">

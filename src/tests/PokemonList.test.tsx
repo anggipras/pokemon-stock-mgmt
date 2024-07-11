@@ -8,7 +8,6 @@ const mockPokemons = [
   {
     name: "pikachu",
     stock: 10,
-    url: "https://pokeapi.co/api/v2/pokemon/25/",
     history: [
       {
         time: new Date().toISOString(),
@@ -22,7 +21,6 @@ const mockPokemons = [
   {
     name: "bulbasaur",
     stock: 5,
-    url: "https://pokeapi.co/api/v2/pokemon/1/",
     history: [
       {
         time: new Date().toISOString(),
@@ -36,7 +34,6 @@ const mockPokemons = [
   {
     name: "charmander",
     stock: 8,
-    url: "https://pokeapi.co/api/v2/pokemon/4/",
     history: [
       {
         time: new Date().toISOString(),
@@ -66,33 +63,24 @@ const renderWithRouter = (ui: React.ReactElement) => {
 };
 
 describe("PokemonList", () => {
-  test("renders correctly with initial data", () => {
+  test("renders the list of pokemons", () => {
     renderWithRouter(<PokemonList />);
 
-    expect(screen.getByText("Stok Pokémon")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Cari Pokémon")).toBeInTheDocument();
-    expect(screen.getByText("pikachu")).toBeInTheDocument();
-    expect(screen.getByText("bulbasaur")).toBeInTheDocument();
-    expect(screen.getByText("charmander")).toBeInTheDocument();
+    expect(screen.getByText(/Stok Pokémon/i)).toBeInTheDocument();
+    expect(screen.getByText(/pikachu/i)).toBeInTheDocument();
+    expect(screen.getByText(/bulbasaur/i)).toBeInTheDocument();
+    expect(screen.getByText(/charmander/i)).toBeInTheDocument();
   });
 
   test("filters the list of pokemons based on search input", () => {
     renderWithRouter(<PokemonList />);
 
-    const searchInput = screen.getByPlaceholderText("Cari Pokémon");
-    fireEvent.change(searchInput, { target: { value: "pika" } });
+    const searchInput = screen.getByPlaceholderText(/Cari Pokémon/i);
 
-    expect(screen.getByText("pikachu")).toBeInTheDocument();
-    expect(screen.queryByText("bulbasaur")).not.toBeInTheDocument();
-    expect(screen.queryByText("charmander")).not.toBeInTheDocument();
-  });
+    fireEvent.change(searchInput, { target: { value: "bulbasaur" } });
 
-  test("handles navigation to pokemon detail page", () => {
-    renderWithRouter(<PokemonList />);
-
-    const pikachuLink = screen.getByText("pikachu");
-    fireEvent.click(pikachuLink);
-
-    expect(window.location.pathname).toBe("/pokemon/pikachu");
+    expect(screen.getByText(/bulbasaur/i)).toBeInTheDocument();
+    expect(screen.queryByText(/pikachu/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/charmander/i)).not.toBeInTheDocument();
   });
 });

@@ -167,6 +167,7 @@ const PokemonDetail: React.FC = () => {
         dozens={dozens}
         currentStock={pokemon.history[0].stock}
         onConfirm={handleConfirmSave}
+        pokemon={pokemon}
         onEdit={() => {
           setConfirmModalOpen(false);
           setUpdateModalOpen(true);

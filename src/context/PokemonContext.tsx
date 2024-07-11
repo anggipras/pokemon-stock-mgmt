@@ -7,9 +7,8 @@ import React, {
 } from "react";
 import { getPokemons } from "../services/api";
 
-interface Pokemon {
+export interface Pokemon {
   name: string;
-  url: string;
   stock: number;
   history: {
     time: string;
@@ -51,21 +50,19 @@ export const PokemonProvider: React.FC<PokemonProviderProps> = ({
 
   const fetchPokemons = async () => {
     const data = await getPokemons();
-    const pokemonsWithStock = data.map(
-      (pokemon: { name: string; url: string }) => ({
-        ...pokemon,
-        stock: 10,
-        history: [
-          {
-            time: new Date().toLocaleString(),
-            activity: "Stok Awal",
-            notes: "",
-            qty: 10,
-            stock: 10,
-          },
-        ],
-      })
-    );
+    const pokemonsWithStock = data.map((pokemon: { name: string }) => ({
+      ...pokemon,
+      stock: 10,
+      history: [
+        {
+          time: new Date().toLocaleString(),
+          activity: "Stok Awal",
+          notes: "",
+          qty: 10,
+          stock: 10,
+        },
+      ],
+    }));
     setPokemons(pokemonsWithStock);
   };
 
@@ -112,4 +109,4 @@ export const usePokemon = () => {
   return context;
 };
 
-export { PokemonContext }; // Add this export
+export { PokemonContext };
