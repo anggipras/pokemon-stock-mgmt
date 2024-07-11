@@ -40,7 +40,7 @@ const PokemonDetail: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto sm:mt-10">
+    <div className="container mx-auto sm:mt-10 overflow-y-scroll">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center max-sm:mb-10">
         <Link to="/">
           <div className="relative flex justify-center items-center hover:underline mb-4 max-sm:shadow-md max-sm:border-b max-sm:p-4">

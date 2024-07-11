@@ -41,7 +41,7 @@ const ConfirmUpdateStock: React.FC<ConfirmUpdateStockProps> = ({
 
   return (
     <div className="fixed inset-0 flex sm:items-center justify-center bg-white">
-      <div className="bg-white w-full sm:h-auto sm:m-auto max-w-2xl">
+      <div className="bg-white w-full sm:h-auto sm:m-auto max-w-2xl overflow-y-scroll">
         <div className="relative flex sm:hidden justify-center items-center hover:underline mb-4 max-sm:shadow-md max-sm:border-b max-sm:p-4">
           <div
             className="max-sm:absolute left-0 max-sm:ml-4 mr-2"
